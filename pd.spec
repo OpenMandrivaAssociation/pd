@@ -16,7 +16,6 @@ License:	BSD
 Group:		Sciences/Other
 URL:		http://www-crca.ucsd.edu/~msp/software.html
 Source:		%name-%rver.src.tar.bz2
-BuildRoot:	%_tmppath/%name-buildroot
 BuildRequires:	tcl tcl-devel tk tk-devel
 BuildRequires:  X11-devel
 
