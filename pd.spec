@@ -9,13 +9,15 @@ Group:		Sciences/Other
 URL:		http://www-crca.ucsd.edu/~msp/software.html
 Source:		http://www-crca.ucsd.edu/~msp/Software/%{name}-%{rver}.src.tar.gz
 BuildRoot:	%{_tmppath}/%{name}-buildroot
-BuildRequires:	tcl
-BuildRequires:	tcl-devel
-BuildRequires:	tk
-BuildRequires:	tk-devel
+BuildRequires:	tcl >= 8.5
+BuildRequires:	tcl-devel >= 8.5
+BuildRequires:	tk >= 8.5
+BuildRequires:	tk-devel >= 8.5
 BuildRequires:  X11-devel
 BuildRequires:	jackit-devel
 BuildRequires:	libalsa-devel
+Requires:	tcl >= 8.5
+Requires:	tk >= 8.5
 
 %description
 Pd gives you a canvas for patching together modules that analyze, process,
