@@ -1,24 +1,21 @@
-%define	name	pd
-%define version	0.38.1
-%define rver	0.38-1
-%define	release	%mkrel 3
+%define rver	0.41-0
 
-%define section	More Applications/Sciences/Data Visualization
-%define	title	Pure Data
-
-%define	Summary	Real-time patchable audio and multimedia processor
-
-Summary:	%Summary
-Name:		%name
-Version:	%version
-Release:	%release
+Summary:	Real-time patchable audio and multimedia processor
+Name:		pd
+Version:	0.41.0
+Release:	%mkrel 1
 License:	BSD
 Group:		Sciences/Other
 URL:		http://www-crca.ucsd.edu/~msp/software.html
-Source:		%name-%rver.src.tar.bz2
-BuildRoot:	%_tmppath/%name-buildroot
-BuildRequires:	tcl tcl-devel tk tk-devel
+Source:		http://www-crca.ucsd.edu/~msp/Software/%{name}-%{rver}.src.tar.gz
+BuildRoot:	%{_tmppath}/%{name}-buildroot
+BuildRequires:	tcl
+BuildRequires:	tcl-devel
+BuildRequires:	tk
+BuildRequires:	tk-devel
 BuildRequires:  X11-devel
+BuildRequires:	jackit-devel
+BuildRequires:	libalsa-devel
 
 %description
 Pd gives you a canvas for patching together modules that analyze, process,
@@ -31,42 +28,41 @@ graphical rendering.
 Summary:	Documentation files for Pure Data
 Group:		Sciences/Other
 %description	doc
-Documentation files for Pure Data
+Documentation files for Pure Data.
 
 %package	devel
-Summary:	Development files
+Summary:	Development files for Pure Data
 Group:		Development/Other
 %description	devel
-Development files
+Development files for Pure Data.
 
 %prep
-
-%setup -q -n %name-%rver
+%setup -q -n %{name}-%{rver}
 
 %build
-cd src
+pushd src
 %configure --enable-jack --enable-alsa
 %make
 
 %install
-rm -rf %buildroot
+rm -rf %{buildroot}
 
-%__mkdir_p %buildroot/%{_bindir}
-%__mkdir_p %buildroot/%{_mandir}/man1
-%__mkdir_p %buildroot/%{_includedir}/%{name}
+%__mkdir_p %{buildroot}/%{_bindir}
+%__mkdir_p %{buildroot}/%{_mandir}/man1
+%__mkdir_p %{buildroot}/%{_includedir}/%{name}
 
-%__install -s -m 755 bin/pd %buildroot/%{_bindir}
-%__install -s bin/pdsend bin/pdreceive %buildroot/%{_bindir}
-%__install -s bin/pd-gui bin/pd-watchdog %buildroot/%{_bindir}
-%__install bin/pd.tk %buildroot/%{_bindir}
+%__install -s -m 755 bin/pd %{buildroot}/%{_bindir}
+%__install -s bin/pdsend bin/pdreceive %{buildroot}/%{_bindir}
+%__install -s bin/pd-gui bin/pd-watchdog %{buildroot}/%{_bindir}
+%__install bin/pd.tk %{buildroot}/%{_bindir}
 
-%__install src/*.h %buildroot/%{_includedir}/%{name}
-#%__cp -pr extra %buildroot/%{_libdir}/%{name}/pd
+%__install src/*.h %{buildroot}/%{_includedir}/%{name}
+#%__cp -pr extra %{buildroot}/%{_libdir}/%{name}/pd
 
-%__install -m 644 man/* %buildroot/%{_mandir}/man1
+%__install -m 644 man/* %{buildroot}/%{_mandir}/man1
 
 %clean
-rm -rf %buildroot
+rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
