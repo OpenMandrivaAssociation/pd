@@ -3,7 +3,7 @@
 Summary:	Real-time patchable audio and multimedia processor
 Name:		pd
 Version:	0.41.0
-Release:	%mkrel 1
+Release:	%mkrel 3
 License:	BSD
 Group:		Sciences/Other
 URL:		http://www-crca.ucsd.edu/~msp/software.html
