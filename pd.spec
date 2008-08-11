@@ -1,23 +1,23 @@
-%define rver	0.41-0
+%define rver 0.41-4
 
 Summary:	Real-time patchable audio and multimedia processor
 Name:		pd
-Version:	0.41.0
-Release:	%mkrel 3
+Version:	%(echo %rver|tr '-' '.')
+Release:	%mkrel 1
 License:	BSD
 Group:		Sciences/Other
-URL:		http://www-crca.ucsd.edu/~msp/software.html
-Source:		http://www-crca.ucsd.edu/~msp/Software/%{name}-%{rver}.src.tar.gz
-BuildRoot:	%{_tmppath}/%{name}-buildroot
+URL:		http://www.puredata.org
+Source:		http://downloads.sourceforge.net/pure-data/%{name}-%{rver}.src.tar.gz
 BuildRequires:	tcl >= 8.5
 BuildRequires:	tcl-devel >= 8.5
 BuildRequires:	tk >= 8.5
 BuildRequires:	tk-devel >= 8.5
-BuildRequires:  X11-devel
+BuildRequires:	X11-devel
 BuildRequires:	jackit-devel
 BuildRequires:	libalsa-devel
 Requires:	tcl >= 8.5
 Requires:	tk >= 8.5
+BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 
 %description
 Pd gives you a canvas for patching together modules that analyze, process,
@@ -26,16 +26,18 @@ and I/O possibilities.  Similar to Max (Cycling74) and JMAX (IRCAM).  A
 related software package named Gem extends Pd's capabilities to include   
 graphical rendering.
 
-%package	doc
+%package doc
 Summary:	Documentation files for Pure Data
 Group:		Sciences/Other
-%description	doc
+
+%description doc
 Documentation files for Pure Data.
 
-%package	devel
+%package devel
 Summary:	Development files for Pure Data
 Group:		Development/Other
-%description	devel
+
+%description devel
 Development files for Pure Data.
 
 %prep
@@ -43,8 +45,12 @@ Development files for Pure Data.
 
 %build
 pushd src
-%configure --enable-jack --enable-alsa
+%configure2_5x \
+	--enable-jack \
+	--enable-alsa
+
 %make
+popd
 
 %install
 rm -rf %{buildroot}
@@ -82,4 +88,3 @@ rm -rf %{buildroot}
 %defattr(-,root,root)
 %dir %{_includedir}/%{name}
 %{_includedir}/%{name}
-
