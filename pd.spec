@@ -3,7 +3,7 @@
 Summary:	Real-time patchable audio and multimedia processor
 Name:		pd
 Version:	%(echo %rver|tr '-' '.')
-Release:	%mkrel 2
+Release:	%mkrel 3
 License:	BSD
 Group:		Sciences/Other
 URL:		http://www.puredata.org
