@@ -16,6 +16,8 @@ BuildRequires:	tk-devel >= 8.5
 BuildRequires:	X11-devel
 BuildRequires:	jackit-devel
 BuildRequires:	libalsa-devel
+BuildRequires:	fftw3-devel
+BuildRequires:	portaudio-devel
 Requires:	tcl >= 8.5
 Requires:	tk >= 8.5
 # PD expects quite a few files from the docs to be present for various
@@ -46,9 +48,12 @@ sed -i -e 's,doc/,share/%{name}/doc/,g' src/s_main.c src/u_main.tk
 %build
 pushd src
 autoconf
+export CPPFLAGS="%{optflags} -I%{_includedir}/fftw3 -I%{_includedir}/portaudio"
 %configure2_5x \
 	--enable-jack \
-	--enable-alsa
+	--enable-alsa \
+	--enable-fftw \
+	--enable-portaudio
 
 %make
 popd
