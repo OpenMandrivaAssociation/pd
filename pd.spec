@@ -1,22 +1,28 @@
-%define rver 0.41-4
+%define rver	0.42-6
+%define ver	%(echo %rver|tr '-' '.')
+%define rel	1
 
 Summary:	Real-time patchable audio and multimedia processor
 Name:		pd
-Version:	%(echo %rver|tr '-' '.')
-Release:	%mkrel 4
+Version:	%{ver}
+Release:	%mkrel %{rel}
 License:	BSD
 Group:		Sciences/Other
 URL:		http://www.puredata.org
 Source0:	http://downloads.sourceforge.net/pure-data/%{name}-%{rver}.src.tar.gz
-Patch0:		pd-0.41-4-tcl86.patch
+Patch0:		pd-0.42-6-tcl86.patch
+Patch1:		pd-0.42-6-big_endian.patch
+Patch2:		pd-0.42-6-fix_strncpy_usage.patch
+Patch3:		pd-0.42-6-hurd.patch
+Patch4:		pd-0.42-6-nostrip.patch
+Patch5:		pd-0.42-6-linking.patch
 BuildRequires:	tcl >= 8.5
 BuildRequires:	tcl-devel >= 8.5
 BuildRequires:	tk >= 8.5
 BuildRequires:	tk-devel >= 8.5
-BuildRequires:	X11-devel
 BuildRequires:	jackit-devel
 BuildRequires:	libalsa-devel
-BuildRequires:	fftw3-devel
+#BuildRequires:	fftw3-devel
 BuildRequires:	portaudio-devel
 Requires:	tcl >= 8.5
 Requires:	tk >= 8.5
@@ -43,19 +49,27 @@ Development files for Pure Data.
 %prep
 %setup -q -n %{name}-%{rver}
 %patch0 -p1 -b .tcl86
-sed -i -e 's,doc/,share/%{name}/doc/,g' src/s_main.c src/u_main.tk
+%patch1 -p1 -b .big_endian
+%patch2 -p1 -b .strncopy
+%patch3 -p1 -b .hurd
+%patch4 -p1 -b .nostrip
+%patch5 -p1 -b .linking
+
+sed -i -e 's|doc/|share/%{name}/doc/|g' src/s_main.c src/u_main.tk
+sed -i -e 's|\(^set help_top_directory\).*|\1 %{_datadir}/%{name}/doc|' src/u_main.tk
 
 %build
 pushd src
 autoconf
-export CPPFLAGS="%{optflags} -I%{_includedir}/fftw3 -I%{_includedir}/portaudio"
+export CPPFLAGS="%{optflags}"
 %configure2_5x \
 	--enable-jack \
 	--enable-alsa \
 	--enable-fftw \
-	--enable-portaudio
+	--enable-portaudio \
+	--enable-portmidi
 
-%make
+%make LDFLAGS="%{ldflags}"
 popd
 
 %install
@@ -75,7 +89,7 @@ rm -rf %{buildroot}
 %__cp -pr doc/ %{buildroot}%{_datadir}/%{name}
 #%__cp -pr extra %{buildroot}/%{_libdir}/%{name}/pd
 
-%__install -m 644 man/* %{buildroot}/%{_mandir}/man1
+%__install -m 644 man/*.1 %{buildroot}/%{_mandir}/man1
 
 %clean
 rm -rf %{buildroot}
@@ -89,5 +103,4 @@ rm -rf %{buildroot}
 
 %files devel
 %defattr(-,root,root)
-%dir %{_includedir}/%{name}
 %{_includedir}/%{name}
