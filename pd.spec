@@ -1,11 +1,12 @@
 %define rver	0.42-6
 %define ver	%(echo %rver|tr '-' '.')
-%define rel	1
+
+%define debug_package %{nil}
 
 Summary:	Real-time patchable audio and multimedia processor
 Name:		pd
 Version:	%{ver}
-Release:	%mkrel %{rel}
+Release:	2
 License:	BSD
 Group:		Sciences/Other
 URL:		http://www.puredata.org
@@ -19,18 +20,16 @@ Patch5:		pd-0.42-6-linking.patch
 BuildRequires:	tcl >= 8.5
 BuildRequires:	tcl-devel >= 8.5
 BuildRequires:	tk >= 8.5
-BuildRequires:	tk-devel >= 8.5
-BuildRequires:	jackit-devel
-BuildRequires:	libalsa-devel
-#BuildRequires:	fftw3-devel
-BuildRequires:	portaudio-devel
+BuildRequires:	pkgconfig(tk) >= 8.5
+BuildRequires:	pkgconfig(jack)
+BuildRequires:	pkgconfig(alsa)
+BuildRequires:	pkgconfig(portaudio-2.0)
 Requires:	tcl >= 8.5
 Requires:	tk >= 8.5
 # PD expects quite a few files from the docs to be present for various
 # things to work, so there's really no point in separating them out
 # - AdamW 2008/12
 Obsoletes:	%{name}-doc < %{version}-%{release}
-BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 
 %description
 Pd gives you a canvas for patching together modules that analyze, process,
@@ -73,7 +72,6 @@ export CPPFLAGS="%{optflags}"
 popd
 
 %install
-rm -rf %{buildroot}
 
 %__mkdir_p %{buildroot}%{_bindir}
 %__mkdir_p %{buildroot}%{_mandir}/man1
@@ -86,21 +84,78 @@ rm -rf %{buildroot}
 %__install bin/pd.tk %{buildroot}/%{_bindir}
 
 %__install src/*.h %{buildroot}/%{_includedir}/%{name}
-%__cp -pr doc/ %{buildroot}%{_datadir}/%{name}
-#%__cp -pr extra %{buildroot}/%{_libdir}/%{name}/pd
-
+cp -pr doc/ %{buildroot}%{_datadir}/%{name}
 %__install -m 644 man/*.1 %{buildroot}/%{_mandir}/man1
 
-%clean
-rm -rf %{buildroot}
 
 %files
-%defattr(-,root,root)
 %doc README.txt LICENSE.txt
 %{_bindir}/*
 %{_mandir}/man1/*
 %{_datadir}/%{name}
 
 %files devel
-%defattr(-,root,root)
 %{_includedir}/%{name}
+
+
+%changelog
+* Thu Dec 16 2010 Jani VÃ¤limaa <wally@mandriva.org> 0.42.6-1mdv2011.0
++ Revision: 622282
+- new version 0.42.6
+- update P0 name
+- add P1,P2,P3 and P4 from Debian
+- add P5 to fix linking
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - rebuild
+
+* Mon Dec 29 2008 Tomasz Pawel Gajc <tpg@mandriva.org> 0.41.4-3mdv2009.1
++ Revision: 320725
+- enable fftw and portaudio support
+
+* Sat Dec 06 2008 Adam Williamson <awilliamson@mandriva.org> 0.41.4-2mdv2009.1
++ Revision: 310976
+- fix paths to the required files in /doc
+- don't split out the docs, they're needed for various things to work
+- rebuild for new tcl
+- add tcl86.patch: fix 8.6 detection, hack/fix interp->result stuff
+
+* Mon Aug 11 2008 Tomasz Pawel Gajc <tpg@mandriva.org> 0.41.4-1mdv2009.0
++ Revision: 270775
+- update to new version 0.41-4
+- fix urls
+- fix mixture of tabs and spaces
+- spec file clean
+
+* Wed Jul 30 2008 Thierry Vignaud <tv@mandriva.org> 0.41.0-3mdv2009.0
++ Revision: 255147
+- rebuild
+
+  + Adam Williamson <awilliamson@mandriva.org>
+    - version the tcl and tk requires
+
+* Sat Feb 09 2008 Adam Williamson <awilliamson@mandriva.org> 0.41.0-1mdv2008.1
++ Revision: 164574
+- rebuild for new era and new tcl/tk
+- spec clean
+- new release 0.41.0
+
+  + Olivier Blin <oblin@mandriva.com>
+    - restore BuildRoot
+
+* Mon Dec 17 2007 Thierry Vignaud <tv@mandriva.org> 0.38.1-3mdv2008.1
++ Revision: 131080
+- kill re-definition of %%buildroot on Pixel's request
+- import pd
+
+
+* Tue Jan 03 2006 Oden Eriksson <oeriksson@mandriva.com> 0.38.1-3mdk
+- rebuilt against soname aware deps (tcl/tk)
+- fix deps
+
+* Fri Sep 30 2005 Nicolas Lécureuil <neoclust@mandriva.org> 0.38.1-2mdk
+ - buildrequires fix
+
+* Sat Jan 15 2005 Tibor Pittich <Tibor.Pittich@mandrake.org> 0.38.1-1mdk
+- initial mandrakelinux import
+- macroszification and some other mandrakelinux specific changes
