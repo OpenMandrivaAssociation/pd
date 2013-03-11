@@ -14,7 +14,7 @@ Source0:	http://downloads.sourceforge.net/pure-data/%{name}-%{rver}.src.tar.gz
 Patch0:		pd-0.42-6-tcl86.patch
 Patch1:		pd-0.42-6-big_endian.patch
 Patch2:		pd-0.42-6-fix_strncpy_usage.patch
-Patch3:		pd-0.42-6-hurd.patch
+#Patch3:		pd-0.42-6-hurd.patch
 Patch4:		pd-0.42-6-nostrip.patch
 Patch5:		pd-0.42-6-linking.patch
 BuildRequires:	tcl >= 8.5
@@ -50,7 +50,7 @@ Development files for Pure Data.
 %patch0 -p1 -b .tcl86
 %patch1 -p1 -b .big_endian
 %patch2 -p1 -b .strncopy
-%patch3 -p1 -b .hurd
+#% patch3 -p1 -b .hurd
 %patch4 -p1 -b .nostrip
 %patch5 -p1 -b .linking
 
