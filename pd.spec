@@ -5,12 +5,12 @@
 
 Summary:	Real-time patchable audio and multimedia processor
 Name:		pd
-Version:	%{ver}
-Release:	2
+Version:	033
+Release:	1
 License:	BSD
 Group:		Sciences/Other
 URL:		http://www.puredata.org
-Source0:	http://downloads.sourceforge.net/pure-data/%{name}-%{rver}.src.tar.gz
+Source0:	http://sourceforge.net/projects/pure-data/files/pure-data/0.33.0/pd-033-linux.tar.gz
 Patch0:		pd-0.42-6-tcl86.patch
 Patch1:		pd-0.42-6-big_endian.patch
 Patch2:		pd-0.42-6-fix_strncpy_usage.patch
@@ -159,3 +159,4 @@ cp -pr doc/ %{buildroot}%{_datadir}/%{name}
 * Sat Jan 15 2005 Tibor Pittich <Tibor.Pittich@mandrake.org> 0.38.1-1mdk
 - initial mandrakelinux import
 - macroszification and some other mandrakelinux specific changes
+
