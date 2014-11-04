@@ -4,11 +4,12 @@
 Summary:	Real-time patchable audio and multimedia processor
 Name:		pd
 Version:	%{ver}
-Release:	3
+Release:	4
 License:	BSD
 Group:		Sciences/Other
 Url:		http://www.puredata.org
 Source0:	http://downloads.sourceforge.net/pure-data/%{name}-%{rver}.src.tar.gz
+Source100:	%{name}.rpmlintrc
 Patch0:		pd-0.42-6-tcl86.patch
 Patch1:		pd-0.42-6-big_endian.patch
 Patch2:		pd-0.42-6-fix_strncpy_usage.patch
