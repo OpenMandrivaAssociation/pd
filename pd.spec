@@ -38,7 +38,7 @@ graphical rendering.
 %files
 %doc README.txt LICENSE.txt
 %{_bindir}/*
-%{_libdir}/pd/
+%{_libdir}/pd/*
 %{_mandir}/man1/*
 #{_datadir}/%{name}
 
