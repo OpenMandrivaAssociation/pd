@@ -61,9 +61,6 @@ Development files for Pure Data.
 %prep
 %setup -q -n %{name}-%{rver}
 
-sed -i -e 's|doc/|share/%{name}/doc/|g' src/s_main.c src/u_main.tk
-sed -i -e 's|\(^set help_top_directory\).*|\1 %{_datadir}/%{name}/doc|' src/u_main.tk
-
 %build
 pushd src
 autoreconf
