@@ -1,4 +1,4 @@
-%define rver	0.51-3
+%define rver	0.51-4
 %define ver	%(echo %rver|tr '-' '.')
 
 Summary:	Real-time patchable audio and multimedia processor
