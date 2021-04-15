@@ -1,11 +1,14 @@
+%define rver	0.51-3
+%define ver	%(echo %rver|tr '-' '.')
+
 Summary:	Real-time patchable audio and multimedia processor
 Name:		pd
-Version:	0.51-3
+Version:	%{ver}
 Release:	1
 License:	BSD
 Group:		Sciences/Other
 Url:		http://www.puredata.org
-Source0:	http://msp.ucsd.edu/Software/%{name}-%{version}.src.tar.gz
+Source0:	http://msp.ucsd.edu/Software/%{name}-%{rver}.src.tar.gz
 #Source0:	http://downloads.sourceforge.net/pure-data/%{name}-%{version}.src.tar.gz
 Source100:	%{name}.rpmlintrc
 #Patch0:		pd-0.42-6-tcl86.patch
@@ -56,7 +59,7 @@ Development files for Pure Data.
 #----------------------------------------------------------------------------
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q -n %{name}-%{rver}
 
 sed -i -e 's|doc/|share/%{name}/doc/|g' src/s_main.c src/u_main.tk
 sed -i -e 's|\(^set help_top_directory\).*|\1 %{_datadir}/%{name}/doc|' src/u_main.tk
