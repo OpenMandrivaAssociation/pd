@@ -1,21 +1,19 @@
-%define rver	0.42-6
-%define ver	%(echo %rver|tr '-' '.')
-
 Summary:	Real-time patchable audio and multimedia processor
 Name:		pd
-Version:	%{ver}
-Release:	5
+Version:	0.51-3
+Release:	1
 License:	BSD
 Group:		Sciences/Other
 Url:		http://www.puredata.org
-Source0:	http://downloads.sourceforge.net/pure-data/%{name}-%{rver}.src.tar.gz
+Source0:	http://msp.ucsd.edu/Software/%{name}-%{version}.src.tar.gz
+#Source0:	http://downloads.sourceforge.net/pure-data/%{name}-%{version}.src.tar.gz
 Source100:	%{name}.rpmlintrc
-Patch0:		pd-0.42-6-tcl86.patch
-Patch1:		pd-0.42-6-big_endian.patch
-Patch2:		pd-0.42-6-fix_strncpy_usage.patch
-Patch3:		pd-0.42-6-hurd.patch
-Patch4:		pd-0.42-6-nostrip.patch
-Patch5:		pd-0.42-6-linking.patch
+#Patch0:		pd-0.42-6-tcl86.patch
+#Patch1:		pd-0.42-6-big_endian.patch
+#Patch2:		pd-0.42-6-fix_strncpy_usage.patch
+#Patch3:		pd-0.42-6-hurd.patch
+#Patch4:		pd-0.42-6-nostrip.patch
+#Patch5:		pd-0.42-6-linking.patch
 BuildRequires:	tcl >= 8.5
 BuildRequires:	tcl-devel >= 8.5
 BuildRequires:	tk >= 8.5
@@ -58,13 +56,7 @@ Development files for Pure Data.
 #----------------------------------------------------------------------------
 
 %prep
-%setup -q -n %{name}-%{rver}
-%patch0 -p1 -b .tcl86
-%patch1 -p1 -b .big_endian
-%patch2 -p1 -b .strncopy
-%patch3 -p1 -b .hurd
-%patch4 -p1 -b .nostrip
-%patch5 -p1 -b .linking
+%setup -q -n %{name}-%{version}
 
 sed -i -e 's|doc/|share/%{name}/doc/|g' src/s_main.c src/u_main.tk
 sed -i -e 's|\(^set help_top_directory\).*|\1 %{_datadir}/%{name}/doc|' src/u_main.tk
