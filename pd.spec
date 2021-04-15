@@ -11,6 +11,7 @@ Url:		http://www.puredata.org
 Source0:	http://msp.ucsd.edu/Software/%{name}-%{rver}.src.tar.gz
 #Source0:	http://downloads.sourceforge.net/pure-data/%{name}-%{version}.src.tar.gz
 Source100:	%{name}.rpmlintrc
+Patch0:		pd-0.51-4-fix-symlink.patch
 
 BuildRequires:	tcl >= 8.5
 BuildRequires:	tcl-devel >= 8.5
@@ -60,6 +61,7 @@ Development files for Pure Data.
 
 %prep
 %setup -q -n %{name}-%{rver}
+%autopatch -p1
 
 %build
 ./autogen.sh
