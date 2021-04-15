@@ -1,28 +1,27 @@
-%define rver	0.42-6
+%define rver	0.51-4
 %define ver	%(echo %rver|tr '-' '.')
 
 Summary:	Real-time patchable audio and multimedia processor
 Name:		pd
 Version:	%{ver}
-Release:	5
+Release:	1
 License:	BSD
 Group:		Sciences/Other
 Url:		http://www.puredata.org
-Source0:	http://downloads.sourceforge.net/pure-data/%{name}-%{rver}.src.tar.gz
+Source0:	http://msp.ucsd.edu/Software/%{name}-%{rver}.src.tar.gz
+#Source0:	http://downloads.sourceforge.net/pure-data/%{name}-%{version}.src.tar.gz
 Source100:	%{name}.rpmlintrc
-Patch0:		pd-0.42-6-tcl86.patch
-Patch1:		pd-0.42-6-big_endian.patch
-Patch2:		pd-0.42-6-fix_strncpy_usage.patch
-Patch3:		pd-0.42-6-hurd.patch
-Patch4:		pd-0.42-6-nostrip.patch
-Patch5:		pd-0.42-6-linking.patch
+Patch0:		pd-0.51-4-fix-symlink.patch
+
 BuildRequires:	tcl >= 8.5
 BuildRequires:	tcl-devel >= 8.5
 BuildRequires:	tk >= 8.5
 BuildRequires:	pkgconfig(alsa)
 BuildRequires:	pkgconfig(jack)
 BuildRequires:	pkgconfig(portaudio-2.0)
+#BuildRequires:  portmidi-devel
 BuildRequires:	pkgconfig(tk) >= 8.5
+BuildRequires:	pkgconfig(fftw3)
 Requires:	tcl >= 8.5
 Requires:	tk >= 8.5
 # PD expects quite a few files from the docs to be present for various
@@ -40,8 +39,9 @@ graphical rendering.
 %files
 %doc README.txt LICENSE.txt
 %{_bindir}/*
+%{_libdir}/pd/*
 %{_mandir}/man1/*
-%{_datadir}/%{name}
+#{_datadir}/%{name}
 
 #----------------------------------------------------------------------------
 
@@ -54,47 +54,26 @@ Development files for Pure Data.
 
 %files devel
 %{_includedir}/%{name}
+%{_includedir}/m_pd.h
+%{_libdir}/pkgconfig/pd.pc
 
 #----------------------------------------------------------------------------
 
 %prep
 %setup -q -n %{name}-%{rver}
-%patch0 -p1 -b .tcl86
-%patch1 -p1 -b .big_endian
-%patch2 -p1 -b .strncopy
-%patch3 -p1 -b .hurd
-%patch4 -p1 -b .nostrip
-%patch5 -p1 -b .linking
-
-sed -i -e 's|doc/|share/%{name}/doc/|g' src/s_main.c src/u_main.tk
-sed -i -e 's|\(^set help_top_directory\).*|\1 %{_datadir}/%{name}/doc|' src/u_main.tk
+%autopatch -p1
 
 %build
-pushd src
-autoreconf
+./autogen.sh
 export CPPFLAGS="%{optflags}"
-%configure2_5x \
+%configure \
 	--enable-jack \
 	--enable-alsa \
 	--disable-fftw \
-	--enable-portaudio \
-	--enable-portmidi
+	--enable-portaudio
+#	--enable-portmidi
 
-%make LDFLAGS="%{ldflags}"
-popd
+%make_build LDFLAGS="%{ldflags}"
 
 %install
-mkdir -p %{buildroot}%{_bindir}
-mkdir -p %{buildroot}%{_mandir}/man1
-mkdir -p %{buildroot}%{_includedir}/%{name}
-mkdir -p %{buildroot}%{_datadir}/%{name}
-
-install -m 755 bin/pd %{buildroot}/%{_bindir}
-install bin/pdsend bin/pdreceive %{buildroot}/%{_bindir}
-install bin/pd-gui bin/pd-watchdog %{buildroot}/%{_bindir}
-install bin/pd.tk %{buildroot}/%{_bindir}
-
-install src/*.h %{buildroot}/%{_includedir}/%{name}
-cp -pr doc/ %{buildroot}%{_datadir}/%{name}
-install -m 644 man/*.1 %{buildroot}/%{_mandir}/man1
-
+%make_install

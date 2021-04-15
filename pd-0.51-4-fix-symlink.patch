@@ -1,0 +1,24 @@
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -349,7 +349,7 @@ clean-local: clean-pdlib
+ install-exec-hook:
+ 	$(MKDIR_P) $(DESTDIR)$(libpdbindir)
+ 	rm -f $(DESTDIR)$(libpdbindir)/pd
+-	$(LN_S) $(DESTDIR)$(bindir)/pd $(DESTDIR)$(libpdbindir)/pd
++	$(LN_S) $(bindir)/pd $(DESTDIR)$(libpdbindir)/pd
+ 
+ # remove the $(libdir)/pd/bin link
+ # &
+--- a/src/s_main.c
++++ b/src/s_main.c
+@@ -32,8 +32,8 @@ char *pd_version = "Pd-" stringify(PD_MA
+ stringify(PD_MINOR_VERSION) "." stringify(PD_BUGFIX_VERSION) "\
+  (" stringify(PD_TEST_VERSION) ")";
+ 
+-char pd_compiletime[] = __TIME__;
+-char pd_compiledate[] = __DATE__;
++char pd_compiletime[] = "";
++char pd_compiledate[] = "";
+ 
+ void pd_init(void);
+ int sys_argparse(int argc, char **argv);
