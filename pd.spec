@@ -62,18 +62,16 @@ Development files for Pure Data.
 %setup -q -n %{name}-%{rver}
 
 %build
-pushd src
-autoreconf
+./autogen.sh
 export CPPFLAGS="%{optflags}"
-%configure2_5x \
+%configure \
 	--enable-jack \
 	--enable-alsa \
 	--disable-fftw \
 	--enable-portaudio \
 	--enable-portmidi
 
-%make LDFLAGS="%{ldflags}"
-popd
+%make_build LDFLAGS="%{ldflags}"
 
 %install
 mkdir -p %{buildroot}%{_bindir}
