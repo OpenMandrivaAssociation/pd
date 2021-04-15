@@ -19,7 +19,7 @@ BuildRequires:	tk >= 8.5
 BuildRequires:	pkgconfig(alsa)
 BuildRequires:	pkgconfig(jack)
 BuildRequires:	pkgconfig(portaudio-2.0)
-BuildRequires:  portmidi-devel
+#BuildRequires:  portmidi-devel
 BuildRequires:	pkgconfig(tk) >= 8.5
 BuildRequires:	pkgconfig(fftw3)
 Requires:	tcl >= 8.5
