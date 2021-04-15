@@ -70,8 +70,8 @@ export CPPFLAGS="%{optflags}"
 	--enable-jack \
 	--enable-alsa \
 	--disable-fftw \
-	--enable-portaudio \
-	--enable-portmidi
+	--enable-portaudio
+#	--enable-portmidi
 
 %make_build LDFLAGS="%{ldflags}"
 
