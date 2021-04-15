@@ -38,6 +38,7 @@ graphical rendering.
 %files
 %doc README.txt LICENSE.txt
 %{_bindir}/*
+%{_libdir}/pd/
 %{_mandir}/man1/*
 #{_datadir}/%{name}
 
@@ -52,6 +53,8 @@ Development files for Pure Data.
 
 %files devel
 %{_includedir}/%{name}
+%{_includedir}/m_pd.h
+%{_libdir}/pkgconfig/pd.pc
 
 #----------------------------------------------------------------------------
 
