@@ -3,7 +3,7 @@
 
 Summary:	Real-time patchable audio and multimedia processor
 Name:		pd
-Version:	%{ver}
+Version:	0.25
 Release:	1
 License:	BSD
 Group:		Sciences/Other
