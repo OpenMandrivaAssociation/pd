@@ -4,7 +4,7 @@
 Summary:	Real-time patchable audio and multimedia processor
 Name:		pd
 Version:	0.25
-Release:	1
+Release:	2
 License:	BSD
 Group:		Sciences/Other
 Url:		http://www.puredata.org
