@@ -7,7 +7,7 @@ Version:	0.25
 Release:	2
 License:	BSD
 Group:		Sciences/Other
-Url:		http://www.puredata.org
+Url:		https://www.puredata.org
 Source0:	http://msp.ucsd.edu/Software/%{name}-%{rver}.src.tar.gz
 #Source0:	http://downloads.sourceforge.net/pure-data/%{name}-%{version}.src.tar.gz
 Source100:	%{name}.rpmlintrc
