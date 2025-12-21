@@ -13,6 +13,11 @@ Source0:	http://msp.ucsd.edu/Software/%{name}-%{rver}.src.tar.gz
 Source100:	%{name}.rpmlintrc
 Patch0:		pd-0.51-4-fix-symlink.patch
 
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	tcl >= 8.5
 BuildRequires:	tcl-devel >= 8.5
 BuildRequires:	tk >= 8.5
